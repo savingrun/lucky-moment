@@ -20,7 +20,9 @@ Page({
 
 Component({
     data: {
-        genshinDataFlag: true,
+        rolePoolDataFlag: true,
+        weaponPoolDataFlag: true,
+        permanentPoolDataFlag: true,
         contentUrl: '',
         ssrList: [0],
         tabPanelstyle: 'display:flex; justify-content:center; align-items:center; min-height:120px;',
@@ -73,11 +75,10 @@ Component({
             let gachaTypeList = [301, 302, 200]
             var baseUrl = "https://hk4e-api.mihoyo.com/event/gacha_info/api/getGachaLog?win_mode=fullscreen&authkey_ver=1&sign_type=2&auth_appid=webview_gacha&init_type=301&timestamp=1673997960&lang=zh-cn&device_type=mobile&plat_type=ios&region=cn_gf01&game_biz=hk4e_cn" +
                 "&authkey=" + authKey +
-                "&size=" + size +
-                "&gacha_type=301"
+                "&size=" + size
             console.log(baseUrl)
-            let dynamicMessagesBefore = '分析第 '
-            let dynamicMessagesAfter = ' 页数据中...'
+            let dynamicMessagesBefore = '分析角色池第 '
+            let dynamicMessagesAfter = ' 页'
             that.setData({
                 dynamicMessages: dynamicMessagesBefore + page + dynamicMessagesAfter
             })
@@ -89,12 +90,20 @@ Component({
                 duration: 120000,
                 preventScrollThrough: true,
             });
+
+            // that.test(10)
+            // for (const [index, elem] of gachaTypeList.entries()) {
+            //     console.log(index, elem);
+            // }
+            var index = 0
             var intervalId = setInterval(function () {
                 var currentUrl = baseUrl +
                     "&timestamp=" + Date.parse(new Date()) / 1000 +
                     "&page=" + page +
-                    "&end_id=" + endId
+                    "&end_id=" + endId +
+                    "&gacha_type=" + gachaTypeList[index]
                 console.log(page)
+                console.log(currentUrl)
                 wx.request({
                     url: currentUrl,
                     header: {
@@ -133,17 +142,35 @@ Component({
                                 direction: 'column',
                             });
                         } else {
-                            console.log(reply.data.list.length)
-                            that.setData({
-                                uid: 'UID: ' + reply.data.list[0].uid,
-                                rolePoolList: that.data.rolePoolList.concat(reply.data.list),
-                                genshinDataFlag: false,
-                                dynamicMessages: dynamicMessagesBefore + page + dynamicMessagesAfter
-                            });
-                            var initialValue = 0
-                            if (page >= 2) {
-                                initialValue = page * size
+                            switch (index) {
+                                case 1:
+                                    that.setData({
+                                        uid: 'UID: ' + reply.data.list[0].uid,
+                                        weaponPoolList: that.data.weaponPoolList.concat(reply.data.list),
+                                        weaponPoolDataFlag: false,
+                                        dynamicMessages: '分析武器池第 ' + page + dynamicMessagesAfter
+                                    });
+                                    break
+                                case 2:
+                                    that.setData({
+                                        uid: 'UID: ' + reply.data.list[0].uid,
+                                        permanentPoolList: that.data.permanentPoolList.concat(reply.data.list),
+                                        permanentPoolDataFlag: false,
+                                        dynamicMessages: '分析常驻池第 ' + page + dynamicMessagesAfter
+                                    });
+                                    break
+                                default:
+                                    that.setData({
+                                        uid: 'UID: ' + reply.data.list[0].uid,
+                                        rolePoolList: that.data.rolePoolList.concat(reply.data.list),
+                                        rolePoolDataFlag: false,
+                                        dynamicMessages: dynamicMessagesBefore + page + dynamicMessagesAfter
+                                    });
                             }
+                            // var initialValue = 0
+                            // if (page >= 2) {
+                            //     initialValue = page * size
+                            // }
                             // for(let i = 0; i < reply.data.list.length; i++) {
                             //     let cur = reply.data.list[i]
                             //     console.log("initialValue:" + initialValue)
@@ -162,7 +189,13 @@ Component({
                             page++
                             endId = reply.data.list[reply.data.list.length - 1].id
                             if (reply.data.list.length < reply.data.size) {
-                                clearInterval(intervalId)
+                                index++
+                                if (index < gachaTypeList.length) {
+                                    page = 1
+                                    endId = 0
+                                } else {
+                                    clearInterval(intervalId)
+                                }
                             }
                         }
                     },
@@ -170,18 +203,19 @@ Component({
                     complete(res) {
                         var reply = res.data
                         if (reply.data.list.length < reply.data.size) {
-                            hideToast({
-                                context: that,
-                                selector: '#t-toast',
-                            });
+                            if (index == gachaTypeList.length) {
+                                console.log(that.data.rolePoolList)
+                                console.log(that.data.weaponPoolList)
+                                console.log(that.data.permanentPoolList)
+                                hideToast({
+                                    context: that,
+                                    selector: '#t-toast',
+                                });
+                            }
                         }
                     }
                 })
             }, 1200)
-
-            // }
-
-
 
             // wx.cloud.callFunction({
             //     name: 'analyse',
@@ -201,7 +235,7 @@ Component({
             //         this.setData({
             //             uid: 'UID: ' + resp.result.data.list[0].uid,
             //             genshinData: resp.result.data.list,
-            //             genshinDataFlag: false
+            //             rolePoolDataFlag: false
             //         });
             //     }
             //     hideToast({
@@ -215,6 +249,14 @@ Component({
             //     });
             // });
         },
-
+        // test(num) {
+        //     var that = this
+        //     console.log("===" + num)
+        //     setTimeout(function() {
+        //         num--
+        //         if (num>0)
+        //             that.test(num)
+        //     }, 2000)
+        // },
     },
 });

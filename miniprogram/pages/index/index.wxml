@@ -10,7 +10,7 @@
 <view class="textarea-example">
     <t-tabs defaultValue="{{0}}" bind:change="onTabsChange" bind:click="onTabsClick" t-class="custom-tabs" theme="card" custom-style="border-radius: 18rpx;">
         <t-tab-panel label="角色池" value="0" style="{{tabPanelstyle}}">
-            <view wx:if="{{genshinDataFlag}}">暂无数据</view>
+            <view wx:if="{{rolePoolDataFlag}}">暂无数据</view>
             <view wx:else>
                 <t-collapse theme="card" defaultValue="{{ssrList}}" expandMutex expandIcon>
                     <block wx:for="{{rolePoolList}}" wx:key="keyId" wx:for-index="index" wx:for-item="rolePoolList">
@@ -23,10 +23,30 @@
             </view>
         </t-tab-panel>
         <t-tab-panel label="武器池" value="1" style="{{tabPanelstyle}}">
-            <view>暂无数据</view>
+            <view wx:if="{{weaponPoolDataFlag}}">暂无数据</view>
+            <view wx:else>
+                <t-collapse theme="card" defaultValue="{{ssrList}}" expandMutex expandIcon>
+                    <block wx:for="{{weaponPoolList}}" wx:key="keyId" wx:for-index="index" wx:for-item="weaponPoolList">
+                        <t-collapse-panel header="{{weaponPoolList.item_type}} / {{weaponPoolList.name}}" value="{{index}}">
+                            <t-rate color="#ffdc5f" value="{{weaponPoolList.rank_type}}" data-index="{{1}}" variant="filled" size="{{20}}" custom-style="padding-bottom: 16rpx;" />
+                            {{weaponPoolList.time}} {{weaponPoolList.id}}
+                        </t-collapse-panel>
+                    </block>
+                </t-collapse>
+            </view>
         </t-tab-panel>
-        <t-tab-panel label="常驻池" value="2" disabled="true" style="{{tabPanelstyle}}">
-            <view>暂无数据</view>
+        <t-tab-panel label="常驻池" value="2" style="{{tabPanelstyle}}">
+            <view wx:if="{{permanentPoolDataFlag}}">暂无数据</view>
+            <view wx:else>
+                <t-collapse theme="card" defaultValue="{{ssrList}}" expandMutex expandIcon>
+                    <block wx:for="{{permanentPoolList}}" wx:key="keyId" wx:for-index="index" wx:for-item="permanentPoolList">
+                        <t-collapse-panel header="{{permanentPoolList.item_type}} / {{permanentPoolList.name}}" value="{{index}}">
+                            <t-rate color="#ffdc5f" value="{{permanentPoolList.rank_type}}" data-index="{{1}}" variant="filled" size="{{20}}" custom-style="padding-bottom: 16rpx;" />
+                            {{permanentPoolList.time}} {{permanentPoolList.id}}
+                        </t-collapse-panel>
+                    </block>
+                </t-collapse>
+            </view>
         </t-tab-panel>
     </t-tabs>
 </view>
