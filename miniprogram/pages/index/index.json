@@ -1,0 +1,15 @@
+{
+    "component": true,
+    "usingComponents": {
+        "t-textarea": "tdesign-miniprogram/textarea/textarea",
+        "t-collapse": "tdesign-miniprogram/collapse/collapse",
+        "t-collapse-panel": "tdesign-miniprogram/collapse-panel/collapse-panel",
+        "t-button": "tdesign-miniprogram/button/button",
+        "t-divider": "tdesign-miniprogram/divider/divider",
+        "t-toast": "tdesign-miniprogram/toast/toast",
+        "t-tabs": "tdesign-miniprogram/tabs/tabs",
+        "t-tab-panel": "tdesign-miniprogram/tab-panel/tab-panel",
+        "t-footer": "tdesign-miniprogram/footer/footer",
+        "t-rate": "tdesign-miniprogram/rate/rate"
+    }
+}

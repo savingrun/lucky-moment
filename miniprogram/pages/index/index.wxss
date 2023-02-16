@@ -1,0 +1,18 @@
+.textarea-example {
+    margin: 0 32rpx;
+    background-color: #fff;
+    border-radius: 18rpx;
+}
+
+.external-class {
+    height: 380rpx;
+}
+
+.button-example {
+    margin: 0 32rpx;
+    padding-top: 32rpx;
+}
+
+.t-footer {
+    padding-top: 32rpx;
+}
