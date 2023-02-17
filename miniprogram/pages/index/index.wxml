@@ -1,10 +1,10 @@
+<t-message id="t-message" />
 <t-toast id="t-toast">
     <view style="padding-top: 32rpx;" slot="message">
         <text>{{dynamicMessages}}</text>
     </view>
 </t-toast>
 <t-toast id="t-toast-warning" />
-
 <t-divider content="{{ uid ? uid : '数据展示' }}" />
 
 <view class="textarea-example">
@@ -66,3 +66,6 @@
 <view class="t-footer">
     <t-footer theme="text" copyright="{{copyright}}"></t-footer>
 </view>
+
+
+<t-fab icon="cloud-upload" bind:click="uploadCloud" aria-label="增加" custom-style="position: absolute; right: 32rpx; bottom: 64rpx;"></t-fab>
