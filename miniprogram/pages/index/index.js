@@ -1,27 +1,16 @@
 // index.js
-// const app = getApp()
+const app = getApp()
 const {
     envList
-} = require('../../envList.js');
+} = require('../../envList.js')
 import Toast, {
     hideToast
 } from 'tdesign-miniprogram/toast/index';
 import Message from 'tdesign-miniprogram/message/index';
 
-Page({
-    /**
-     * 页面的初始数据
-     */
-    data: {},
-    onLoad(options) {
-        this.setData({
-            envId: options.envId
-        });
-    },
-});
-
 Component({
     data: {
+        scrollViewHeight: 0,
         rolePoolDataFlag: true,
         weaponPoolDataFlag: true,
         permanentPoolDataFlag: true,
@@ -35,6 +24,15 @@ Component({
         dynamicMessages: ''
     },
     methods: {
+        onLoad(options) {
+            var that = this
+            console.log(wx.getSystemInfoSync().windowHeight)
+            that.setData({
+                envId: options.envId,
+                scrollViewHeight: wx.getSystemInfoSync().windowHeight / 1.5
+            })
+        },
+         
         onShareAppMessage() {
             return {
                 title: '欢迎欧皇',
@@ -44,31 +42,31 @@ Component({
         },
 
         onTabsChange(event) {
-            console.log(`Change tab, tab-panel value is ${event.detail.value}.`);
+            console.log(`Change tab, tab-panel value is ${event.detail.value}.`)
         },
 
         onTabsClick(event) {
-            console.log(`Click tab, tab-panel value is ${event.detail.value}.`);
+            console.log(`Click tab, tab-panel value is ${event.detail.value}.`)
         },
 
         contentUrl(e) {
-            console.log(e.detail.value);
-            var that = this;
+            console.log(e.detail.value)
+            var that = this
             that.setData({
                 contentUrl: e.detail.value.replace(/\s+/g, '')
             })
         },
 
         getUrlParam(contentUrl, paramName) {
-            let search = contentUrl.replace(/\?/, '');
-            let reg = new RegExp('(^|&)' + paramName + '=(.*?)(&|$)');
-            let res = search.match(reg);
-            return res ? res[2] : null;
+            let search = contentUrl.replace(/\?/, '')
+            let reg = new RegExp('(^|&)' + paramName + '=(.*?)(&|$)')
+            let res = search.match(reg)
+            return res ? res[2] : null
         },
 
         analyse(e) {
-            var that = this;
-            console.log(that.data.contentUrl);
+            var that = this
+            console.log(that.data.contentUrl)
             if (that.data.contentUrl == '') {
                 Toast({
                     context: that,
@@ -76,24 +74,24 @@ Component({
                     message: '分析连接不能为空',
                     theme: 'warning',
                     direction: 'column',
-                });
-                return;
+                })
+                return
             }
-            var authKey = that.getUrlParam(that.data.contentUrl, "authkey");
-            console.log(authKey);
-            var endId = 0;
-            var page = 1;
-            let size = 20;
-            let gachaTypeList = [301, 302, 200];
+            var authKey = that.getUrlParam(that.data.contentUrl, "authkey")
+            console.log(authKey)
+            var endId = 0
+            var page = 1
+            let size = 20
+            let gachaTypeList = [301, 302, 200]
             var baseUrl = "https://hk4e-api.mihoyo.com/event/gacha_info/api/getGachaLog?win_mode=fullscreen&authkey_ver=1&sign_type=2&auth_appid=webview_gacha&init_type=301&timestamp=1673997960&lang=zh-cn&device_type=mobile&plat_type=ios&region=cn_gf01&game_biz=hk4e_cn" +
                 "&authkey=" + authKey +
-                "&size=" + size;
-            console.log(baseUrl);
-            let dynamicMessagesBefore = '分析角色池第 ';
-            let dynamicMessagesAfter = ' 页';
+                "&size=" + size
+            console.log(baseUrl)
+            let dynamicMessagesBefore = '分析角色池第 '
+            let dynamicMessagesAfter = ' 页'
             that.setData({
                 dynamicMessages: dynamicMessagesBefore + page + dynamicMessagesAfter
-            });
+            })
             Toast({
                 context: that,
                 selector: '#t-toast',
@@ -101,16 +99,16 @@ Component({
                 direction: 'column',
                 duration: 200000,
                 preventScrollThrough: true,
-            });
-            var index = 0;
+            })
+            var index = 0
             var intervalId = setInterval(function () {
                 var currentUrl = baseUrl +
                     "&timestamp=" + Date.parse(new Date()) / 1000 +
                     "&page=" + page +
                     "&end_id=" + endId +
-                    "&gacha_type=" + gachaTypeList[index];
-                console.log(page);
-                console.log(currentUrl);
+                    "&gacha_type=" + gachaTypeList[index]
+                console.log(page)
+                console.log(currentUrl)
                 wx.request({
                     url: currentUrl,
                     header: {
@@ -128,22 +126,22 @@ Component({
                     dataType: 'json',
                     method: 'GET',
                     success(res) {
-                        var reply = res.data;
-                        console.log(reply);
+                        var reply = res.data
+                        console.log(reply)
                         if (reply.retcode == -101 || reply.retcode == -100) {
-                            that.setData({});
+                            that.setData({})
                             hideToast({
                                 context: that,
                                 selector: '#t-toast',
-                            });
+                            })
                             Toast({
                                 context: that,
                                 selector: '#t-toast-warning',
                                 message: reply.message,
                                 theme: 'warning',
                                 direction: 'column',
-                            });
-                            clearInterval(intervalId);
+                            })
+                            clearInterval(intervalId)
                         } else {
                             switch (index) {
                                 case 1:
@@ -152,23 +150,23 @@ Component({
                                         weaponPoolList: that.data.weaponPoolList.concat(reply.data.list),
                                         weaponPoolDataFlag: false,
                                         dynamicMessages: '分析武器池第 ' + page + dynamicMessagesAfter
-                                    });
-                                    break;
+                                    })
+                                    break
                                 case 2:
                                     that.setData({
                                         uid: 'UID: ' + reply.data.list[0].uid,
                                         permanentPoolList: that.data.permanentPoolList.concat(reply.data.list),
                                         permanentPoolDataFlag: false,
                                         dynamicMessages: '分析常驻池第 ' + page + dynamicMessagesAfter
-                                    });
-                                    break;
+                                    })
+                                    break
                                 default:
                                     that.setData({
                                         uid: 'UID: ' + reply.data.list[0].uid,
                                         rolePoolList: that.data.rolePoolList.concat(reply.data.list),
                                         rolePoolDataFlag: false,
                                         dynamicMessages: dynamicMessagesBefore + page + dynamicMessagesAfter
-                                    });
+                                    })
                             }
                             // var initialValue = 0
                             // if (page >= 2) {
@@ -189,15 +187,15 @@ Component({
                             //         });
                             //     }
                             // }
-                            page++;
-                            endId = reply.data.list[reply.data.list.length - 1].id;
+                            page++
+                            endId = reply.data.list[reply.data.list.length - 1].id
                             if (reply.data.list.length < reply.data.size) {
-                                index++;
+                                index++
                                 if (index < gachaTypeList.length) {
-                                    page = 1;
-                                    endId = 0;
+                                    page = 1
+                                    endId = 0
                                 } else {
-                                    clearInterval(intervalId);
+                                    clearInterval(intervalId)
                                 }
                             }
                         }
@@ -210,27 +208,27 @@ Component({
                             message: err,
                             theme: 'warning',
                             direction: 'column',
-                        });
+                        })
                     },
                     complete(res) {
-                        var reply = res.data;
+                        var reply = res.data
                         if (reply.data == null) {
-                            return;
+                            return
                         }
                         if (reply.data.list.length < reply.data.size) {
                             if (index == gachaTypeList.length) {
-                                console.log(that.data.rolePoolList);
-                                console.log(that.data.weaponPoolList);
-                                console.log(that.data.permanentPoolList);
+                                console.log(that.data.rolePoolList)
+                                console.log(that.data.weaponPoolList)
+                                console.log(that.data.permanentPoolList)
                                 hideToast({
                                     context: that,
                                     selector: '#t-toast',
-                                });
+                                })
                             }
                         }
                     }
                 })
-            }, 1200);
+            }, 700)
 
             // wx.cloud.callFunction({
             //     name: 'analyse',
@@ -266,11 +264,11 @@ Component({
         },
 
         uploadCloud(e) {
-            var that = this;
-            console.log(e);
+            var that = this
+            console.log(e)
             that.setData({
                 dynamicMessages: '数据同步云端中...'
-            });
+            })
             Toast({
                 context: that,
                 selector: '#t-toast',
@@ -278,22 +276,40 @@ Component({
                 direction: 'column',
                 duration: 2000,
                 preventScrollThrough: true,
-            });
-
-            setTimeout(function () {
-                hideToast({
-                    context: that,
-                    selector: '#t-toast',
-                });
-                Message.success({
-                    context: that,
-                    offset: [20, 32],
-                    duration: 1500,
-                    content: '同步成功',
-                    icon: 'check-circle-filled'
-                });
-            }, 1500);
+            })
+            var roleList = this.data.rolePoolList
+            var weaponList = this.data.weaponPoolList
+            var permanentList = this.data.permanentPoolList
+            var gachaList = roleList.concat(weaponList, permanentList)
+            wx.cloud.callFunction({
+                name: 'uploadCloud',
+                config: {
+                    env: this.data.envId
+                },
+                data: {
+                    gachaList: gachaList
+                },
+                success(res) {
+                    console.log(res)
+                },
+                fail(err) {
+                    console.log(err)
+                },
+                complete(res) {
+                    hideToast({
+                        context: that,
+                        selector: '#t-toast',
+                    })
+                    Message.success({
+                        context: that,
+                        offset: [20, 32],
+                        duration: 1500,
+                        content: '同步成功',
+                        icon: 'check-circle-filled'
+                    })
+                }
+            })
         },
 
     },
-});
+})

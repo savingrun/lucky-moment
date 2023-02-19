@@ -1,4 +1,4 @@
-.textarea-example {
+.textarea {
     margin: 0 32rpx;
     background-color: #fff;
     border-radius: 18rpx;
@@ -8,7 +8,7 @@
     height: 380rpx;
 }
 
-.button-example {
+.button {
     margin: 0 32rpx;
     padding-top: 32rpx;
 }
@@ -17,7 +17,7 @@
     padding-top: 32rpx;
 }
 
-.message-example {
+.message {
     margin: 32rpx;
 }
 
