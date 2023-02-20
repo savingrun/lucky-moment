@@ -17,12 +17,13 @@ Component({
 		contentUrl: '',
 		ssrList: [0],
 		tabPanelstyle: 'display:flex; justify-content:center; align-items:center; min-height:120px;',
-		copyright: 'Saving © 2021-2031 TD.All Rights Reserved.',
+		copyright: 'Saving © 2023-2033 TD.All Rights Reserved.',
 		rolePoolList: [],
 		weaponPoolList: [],
 		permanentPoolList: [],
 		dynamicMessages: '',
-		requestRecordList: []
+        requestRecordList: [],
+        skeletonLoading: true
 	},
 	methods: {
 		onLoad(options) {
@@ -35,7 +36,8 @@ Component({
 				success(res) {
 					console.log(res)
 					that.setData({
-						requestRecordList: res.result
+                        requestRecordList: res.result,
+                        skeletonLoading: false
 					})
 				},
 				fail(err) {
@@ -45,7 +47,7 @@ Component({
 			})
 			that.setData({
 				envId: options.envId,
-				scrollViewHeight: wx.getSystemInfoSync().windowHeight / 1.5
+				scrollViewHeight: wx.getSystemInfoSync().windowHeight
 			})
 		},
 

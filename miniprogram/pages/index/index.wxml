@@ -9,14 +9,23 @@
 
 <view wx:if="{{rolePoolDataFlag}}">
     <t-cell-group theme="card">
-        <text style="font-size: 36rpx; font-weight: 700; line-height: 64rpx; color: rgba(0, 0, 0, 0.9)">云端数据</text>
+        <view>
+            <!-- <t-icon name="cloud" size="24" data-name="cloud" /> -->
+            <text style="font-size: 36rpx; font-weight: 800; line-height: 64rpx; color: rgba(0, 0, 0, 0.9)">云端数据</text>
+        </view>
+        <view class="section_content">
+            <t-skeleton theme="paragraph" animation="gradient" loading="{{skeletonLoading}}"></t-skeleton>
+        </view>
         <block wx:for="{{requestRecordList}}" wx:key="keyId" wx:for-index="index" wx:for-item="requestRecord">
             <t-cell leftIcon="cloud-download" hover custom-style="border-radius: 18rpx; margin: 18rpx 0 18rpx 0;">
-                <text slot="title" style="font-size: 28rpx;">{{requestRecord.uid}}</text>
-                <text slot="note" style="font-size: 28rpx;">{{requestRecord.create_time}}</text>
+                <text slot="title" style="font-size: 28rpx; font-weight: 500;">{{requestRecord.uid}}</text>
+                <text slot="note" style="font-size: 28rpx; font-weight: 500;">{{requestRecord.create_time}}</text>
             </t-cell>
         </block>
     </t-cell-group>
+    <view class="textarea">
+        <t-textarea t-class-label="t-class-label" bind:change="contentUrl" t-class="external-class" label="URL" placeholder="https://hk4e-api.mihoyo.com/event/gacha_info/api/getGachaLog?.." maxlength="2000" indicator disableDefaultPadding="{{true}}" style="border-radius: 18rpx;" />
+    </view>
 </view>
 <view wx:else>
     <t-divider content="{{ uid ? uid : '数据展示' }}" />
@@ -66,10 +75,6 @@
         </view>
     </scroll-view>
     <t-divider />
-</view>
-
-<view class="textarea">
-    <t-textarea bind:change="contentUrl" t-class="external-class" label="URL" placeholder="复制进来" maxlength="2000" indicator disableDefaultPadding="{{true}}" style="border-radius: 18rpx;" />
 </view>
 
 <view class="button">

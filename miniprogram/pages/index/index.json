@@ -15,6 +15,7 @@
         "t-message": "tdesign-miniprogram/message/message",
         "t-cell-group": "tdesign-miniprogram/cell-group/cell-group",
         "t-cell": "tdesign-miniprogram/cell/cell",
-        "t-icon": "tdesign-miniprogram/icon/icon"
+        "t-icon": "tdesign-miniprogram/icon/icon",
+        "t-skeleton": "tdesign-miniprogram/skeleton/skeleton"
     }
 }

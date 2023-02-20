@@ -24,3 +24,12 @@
 .external-class {
     margin: 0 0 32rpx 0;
 }
+
+.t-class-label {
+    font-weight: 500;
+}
+
+.section_content {
+    margin-top: 32rpx;
+    margin-bottom: 32rpx;
+}
