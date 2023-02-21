@@ -176,7 +176,6 @@ Component({
                                     that.setData({
                                         uid: 'UID: ' + reply.data.list[0].uid,
                                         weaponPoolList: that.data.weaponPoolList.concat(reply.data.list),
-                                        weaponPoolDataFlag: false,
                                         dynamicMessages: '分析武器池第 ' + page + dynamicMessagesAfter
                                     })
                                     break
@@ -184,7 +183,6 @@ Component({
                                     that.setData({
                                         uid: 'UID: ' + reply.data.list[0].uid,
                                         permanentPoolList: that.data.permanentPoolList.concat(reply.data.list),
-                                        permanentPoolDataFlag: false,
                                         dynamicMessages: '分析常驻池第 ' + page + dynamicMessagesAfter
                                     })
                                     break
@@ -192,7 +190,6 @@ Component({
                                     that.setData({
                                         uid: 'UID: ' + reply.data.list[0].uid,
                                         rolePoolList: that.data.rolePoolList.concat(reply.data.list),
-                                        rolePoolDataFlag: false,
                                         dynamicMessages: dynamicMessagesBefore + page + dynamicMessagesAfter
                                     })
                             }
@@ -327,17 +324,20 @@ Component({
             switch (type) {
                 case "role":
                     that.setData({
-                        analyseRolePoolList: analyseList
+                        analyseRolePoolList: analyseList,
+                        rolePoolDataFlag: false
                     })
                     break
                 case "weapon":
                     that.setData({
-                        analyseWeaponPoolList: analyseList
+                        analyseWeaponPoolList: analyseList,
+                        weaponPoolDataFlag: false
                     })
                     break
                 default:
                     that.setData({
-                        analysePermanentPoolList: analyseList
+                        analysePermanentPoolList: analyseList,
+                        permanentPoolDataFlag: false
                     })
             }
         },
