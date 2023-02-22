@@ -6,7 +6,7 @@
 </t-toast>
 <t-toast id="t-toast-warning" />
 
-<view wx:if="{{!rolePoolDataFlag}}">
+<view wx:if="{{uploadCloudFlag}}">
     <t-fab icon="cloud-upload" bind:click="uploadCloud" aria-label="增加" custom-style="z-index: 100; position: absolute; right: 32rpx; bottom: 64rpx;"></t-fab>
 </view>
 
@@ -20,9 +20,9 @@
             <t-skeleton theme="paragraph" animation="gradient" loading="{{skeletonLoading}}"></t-skeleton>
         </view>
         <block wx:for="{{requestRecordList}}" wx:key="keyId" wx:for-index="index" wx:for-item="requestRecord">
-            <t-cell leftIcon="cloud-download" hover custom-style="border-radius: 18rpx; margin: 18rpx 0 18rpx 0;">
-                <text slot="title" style="font-size: 28rpx; font-weight: 500;">{{requestRecord.uid}}</text>
-                <text slot="note" style="font-size: 28rpx; font-weight: 500;">{{requestRecord.create_time}}</text>
+            <t-cell bind:click="getHistoryRecord" data-uid="{{requestRecord.uid}}" leftIcon="cloud-download" hover custom-style="border-radius: 18rpx; margin: 18rpx 0 18rpx 0;">
+                <text slot="title" style="font-size: 28rpx; font-weight: 700;">{{requestRecord.uid}}</text>
+                <text slot="note" style="font-size: 28rpx; font-weight: 700;">{{requestRecord.create_time}}</text>
             </t-cell>
         </block>
     </t-cell-group>
@@ -101,8 +101,11 @@
     <t-divider />
 </view>
 
-<view class="button">
+<view class="button" wx:if="{{snapButtonFlag}}">
     <t-button theme="primary" size="large" block bind:tap="snap">分析</t-button>
+</view>
+<view class="button" wx:else>
+    <t-button theme="primary" size="large" block bind:tap="clearData">返回</t-button>
 </view>
 
 <view class="t-footer">

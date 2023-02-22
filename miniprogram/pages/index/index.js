@@ -14,6 +14,8 @@ Component({
         rolePoolDataFlag: true,
         weaponPoolDataFlag: true,
         permanentPoolDataFlag: true,
+        uploadCloudFlag: false,
+        snapButtonFlag: true,
         contentUrl: '',
         ssrList: [0],
         tabPanelstyle: 'display:flex; justify-content:center; align-items:center; min-height:120px;',
@@ -249,6 +251,10 @@ Component({
                                     context: that,
                                     selector: '#t-toast',
                                 })
+                                that.setData({
+                                    uploadCloudFlag: true,
+                                    snapButtonFlag: false
+                                })
                                 that.analyse(that.data.rolePoolList, "role")
                                 that.analyse(that.data.weaponPoolList, "weapon")
                                 that.analyse(that.data.permanentPoolList, "permanent")
@@ -296,7 +302,7 @@ Component({
             console.log(list)
             var flagNum = 0
             var analyseList = []
-            for (let index = list.length-1; index >= 0; index--) {
+            for (let index = list.length - 1; index >= 0; index--) {
                 const element = list[index];
                 console.log(element)
                 flagNum++
@@ -319,8 +325,8 @@ Component({
                     console.log("flagNum:" + flagNum)
                 }
             }
-            console.log("analyseList:")
-            console.log(analyseList)
+            // console.log("analyseList:")
+            // console.log(analyseList)
             switch (type) {
                 case "role":
                     that.setData({
@@ -390,5 +396,63 @@ Component({
             })
         },
 
+        getHistoryRecord(event) {
+            console.log(event.currentTarget.dataset.uid)
+            var that = this
+            that.getGachaRecordByUid(event.currentTarget.dataset.uid, "role")
+            that.getGachaRecordByUid(event.currentTarget.dataset.uid, "weapon")
+            that.getGachaRecordByUid(event.currentTarget.dataset.uid, "permanent")
+            that.setData({
+                snapButtonFlag: false
+            })
+        },
+
+        getGachaRecordByUid(uid, type) {
+            var that = this
+            var rankTypeList = ['3', '4', '5']
+            var gachaTypeList = []
+            switch (type) {
+                case "role":
+                    gachaTypeList = ['301', '400']
+                    break
+                case "weapon":
+                    gachaTypeList = ['302']
+                    break
+                default:
+                    gachaTypeList = ['200']
+            }
+            wx.cloud.callFunction({
+                name: 'getGachaRecordByUid',
+                config: {
+                    env: this.data.envId
+                },
+                data: {
+                    uid: uid,
+                    rankTypeList: rankTypeList,
+                    gachaTypeList: gachaTypeList
+                },
+                success(res) {
+                    that.analyse(res.result, type)
+                },
+                fail(err) {
+                    console.log(err)
+                },
+                complete(res) {}
+            })
+        },
+
+        clearData() {
+            var that = this
+            that.setData({
+                rolePoolDataFlag: true,
+                snapButtonFlag: true,
+                rolePoolList: [],
+                weaponPoolList: [],
+                permanentPoolList: [],
+                analyseRolePoolList: [],
+                analyseWeaponPoolList: [],
+                analysePermanentPoolList: []
+            })
+        }
     },
 })
