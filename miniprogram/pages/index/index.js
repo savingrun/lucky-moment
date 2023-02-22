@@ -399,6 +399,17 @@ Component({
         getHistoryRecord(event) {
             console.log(event.currentTarget.dataset.uid)
             var that = this
+            that.setData({
+                dynamicMessages: '获取数据中..'
+            })
+            Toast({
+                context: that,
+                selector: '#t-toast',
+                theme: 'loading',
+                direction: 'column',
+                duration: 2200,
+                preventScrollThrough: true,
+            })
             that.getGachaRecordByUid(event.currentTarget.dataset.uid, "role")
             that.getGachaRecordByUid(event.currentTarget.dataset.uid, "weapon")
             that.getGachaRecordByUid(event.currentTarget.dataset.uid, "permanent")

@@ -105,7 +105,7 @@
     <t-button theme="primary" size="large" block bind:tap="snap">分析</t-button>
 </view>
 <view class="button" wx:else>
-    <t-button theme="primary" size="large" block bind:tap="clearData">返回</t-button>
+    <t-button theme="default" size="large" block bind:tap="clearData">返回</t-button>
 </view>
 
 <view class="t-footer">
