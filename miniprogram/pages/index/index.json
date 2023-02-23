@@ -17,6 +17,8 @@
         "t-cell": "tdesign-miniprogram/cell/cell",
         "t-icon": "tdesign-miniprogram/icon/icon",
         "t-skeleton": "tdesign-miniprogram/skeleton/skeleton",
-        "t-progress": "tdesign-miniprogram/progress/progress"
+        "t-progress": "tdesign-miniprogram/progress/progress",
+        "t-steps": "tdesign-miniprogram/steps/steps",
+        "t-step-item": "tdesign-miniprogram/step-item/step-item"
     }
 }

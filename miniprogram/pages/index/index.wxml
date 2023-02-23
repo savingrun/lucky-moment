@@ -32,72 +32,60 @@
 </view>
 <view wx:else>
     <t-divider content="{{ uid ? uid : '数据展示' }}" />
-    <scroll-view scroll-y="true" style="max-height: {{scrollViewHeight}}rpx;" enable-back-to-top="true" scroll-anchoring="true" enable-passive="true" enhanced="true" fast-deceleration="true">
+    <!-- <scroll-view scroll-y="true" style="max-height: {{scrollViewHeight}}rpx;" enable-back-to-top="true" scroll-anchoring="true" enable-passive="true" enhanced="true" fast-deceleration="true"> -->
         <view class="textarea">
             <t-tabs defaultValue="{{0}}" bind:change="onTabsChange" bind:click="onTabsClick" t-class="custom-tabs" theme="card" custom-style="border-radius: 18rpx;">
                 <t-tab-panel label="角色池" value="0" style="{{tabPanelstyle}}">
                     <view wx:if="{{rolePoolDataFlag}}">暂无数据</view>
                     <view wx:else>
-                        <t-collapse theme="card" defaultValue="{{ssrList}}" expandMutex expandIcon>
-                            <block wx:for="{{analyseRolePoolList}}" wx:key="keyId" wx:for-index="index" wx:for-item="analyseRolePoolList">
-                                <t-collapse-panel header="{{analyseRolePoolList.info.item_type}} / {{analyseRolePoolList.info.name}} / {{analyseRolePoolList.flagNum}} 抽" value="{{index}}">
-                                    <t-rate color="#ffdc5f" value="{{analyseRolePoolList.info.rank_type}}" data-index="{{1}}" variant="filled" size="{{20}}" custom-style="padding-bottom: 16rpx;" />
-                                    {{analyseRolePoolList.info.time}} {{analyseRolePoolList.info.id}} - {{analyseRolePoolList.flagNum}}
-                                    <t-progress theme="plump" label="{{false}}" percentage="{{(analyseRolePoolList.flagNum/90)*100}}" />
-                                </t-collapse-panel>
-                            </block>
-                            <!-- <block wx:for="{{rolePoolList}}" wx:key="keyId" wx:for-index="index" wx:for-item="rolePoolList">
-                                <t-collapse-panel header="{{rolePoolList.item_type}} / {{rolePoolList.name}}" value="{{index}}">
-                                    <t-rate color="#ffdc5f" value="{{rolePoolList.rank_type}}" data-index="{{1}}" variant="filled" size="{{20}}" custom-style="padding-bottom: 16rpx;" />
-                                    {{rolePoolList.time}} {{rolePoolList.id}}
-                                </t-collapse-panel>
-                            </block> -->
-                        </t-collapse>
+                        <view>
+                            <t-steps layout="vertical" readonly theme="default">
+                                <block wx:for="{{analyseRolePoolList}}" wx:key="keyId" wx:for-index="index" wx:for-item="record">
+                                    <t-step-item status="{{record.info.item_type==null ? 'default' : 'finish'}}" icon="round" title="{{record.info.item_type==null ? '已垫' : record.info.item_type + ' | '}}{{record.info.name}} | {{record.flagNum}} 抽">
+                                        <view style="margin-top: 32rpx;" slot="content">
+                                            <t-progress theme="plump" label="{{false}}" percentage="{{(record.flagNum/90)*100}}" />
+                                        </view>
+                                    </t-step-item>
+                                </block>
+                            </t-steps>
+                        </view>
                     </view>
                 </t-tab-panel>
                 <t-tab-panel label="武器池" value="1" style="{{tabPanelstyle}}">
                     <view wx:if="{{weaponPoolDataFlag}}">暂无数据</view>
                     <view wx:else>
-                        <t-collapse theme="card" defaultValue="{{ssrList}}" expandMutex expandIcon>
-                            <block wx:for="{{analyseWeaponPoolList}}" wx:key="keyId" wx:for-index="index" wx:for-item="analyseWeaponPoolList">
-                                <t-collapse-panel header="{{analyseWeaponPoolList.info.item_type}} / {{analyseWeaponPoolList.info.name}} / {{analyseWeaponPoolList.flagNum}} 抽" value="{{index}}">
-                                    <t-rate color="#ffdc5f" value="{{analyseWeaponPoolList.info.rank_type}}" data-index="{{1}}" variant="filled" size="{{20}}" custom-style="padding-bottom: 16rpx;" />
-                                    {{analyseWeaponPoolList.info.time}} {{analyseWeaponPoolList.info.id}} - {{analyseWeaponPoolList.flagNum}}
-                                    <t-progress theme="plump" label="{{false}}" percentage="{{(analyseWeaponPoolList.flagNum/80)*100}}" />
-                                </t-collapse-panel>
-                            </block>
-                            <!-- <block wx:for="{{weaponPoolList}}" wx:key="keyId" wx:for-index="index" wx:for-item="weaponPoolList">
-                                <t-collapse-panel header="{{weaponPoolList.item_type}} / {{weaponPoolList.name}}" value="{{index}}">
-                                    <t-rate color="#ffdc5f" value="{{weaponPoolList.rank_type}}" data-index="{{1}}" variant="filled" size="{{20}}" custom-style="padding-bottom: 16rpx;" />
-                                    {{weaponPoolList.time}} {{weaponPoolList.id}}
-                                </t-collapse-panel>
-                            </block> -->
-                        </t-collapse>
+                        <view>
+                            <t-steps separator="arrow" layout="vertical" readonly theme="default">
+                                <block wx:for="{{analyseWeaponPoolList}}" wx:key="keyId" wx:for-index="index" wx:for-item="record">
+                                    <t-step-item status="{{record.info.item_type==null ? 'default' : 'finish'}}" icon="round" title="{{record.info.item_type==null ? '已垫' : record.info.item_type + ' | '}}{{record.info.name}} | {{record.flagNum}} 抽">
+                                        <view style="margin-top: 32rpx;" slot="content">
+                                            <t-progress theme="plump" label="{{false}}" percentage="{{(record.flagNum/90)*100}}" />
+                                        </view>
+                                    </t-step-item>
+                                </block>
+                            </t-steps>
+                        </view>
                     </view>
                 </t-tab-panel>
                 <t-tab-panel label="常驻池" value="2" style="{{tabPanelstyle}}">
                     <view wx:if="{{permanentPoolDataFlag}}">暂无数据</view>
                     <view wx:else>
-                        <t-collapse theme="card" defaultValue="{{ssrList}}" expandMutex expandIcon>
-                            <block wx:for="{{analysePermanentPoolList}}" wx:key="keyId" wx:for-index="index" wx:for-item="analysePermanentPoolList">
-                                <t-collapse-panel header="{{analysePermanentPoolList.info.item_type}} / {{analysePermanentPoolList.info.name}} / {{analysePermanentPoolList.flagNum}} 抽" value="{{index}}">
-                                    <t-rate color="#ffdc5f" value="{{analysePermanentPoolList.info.rank_type}}" data-index="{{1}}" variant="filled" size="{{20}}" custom-style="padding-bottom: 16rpx;" />
-                                    {{analysePermanentPoolList.info.time}} {{analysePermanentPoolList.info.id}} - {{analysePermanentPoolList.flagNum}}
-                                    <t-progress theme="plump" label="{{false}}" percentage="{{(analysePermanentPoolList.flagNum/90)*100}}" />
-                                </t-collapse-panel>
-                            </block>
-                            <!-- <block wx:for="{{permanentPoolList}}" wx:key="keyId" wx:for-index="index" wx:for-item="permanentPoolList">
-                                <t-collapse-panel header="{{permanentPoolList.item_type}} / {{permanentPoolList.name}}" value="{{index}}">
-                                    <t-rate color="#ffdc5f" value="{{permanentPoolList.rank_type}}" data-index="{{1}}" variant="filled" size="{{20}}" custom-style="padding-bottom: 16rpx;" />
-                                    {{permanentPoolList.time}} {{permanentPoolList.id}}
-                                </t-collapse-panel>
-                            </block> -->
-                        </t-collapse>
+                        <view>
+                            <t-steps layout="vertical" readonly theme="default">
+                                <block wx:for="{{analysePermanentPoolList}}" wx:key="keyId" wx:for-index="index" wx:for-item="record">
+                                    <t-step-item status="{{record.info.item_type==null ? 'default' : 'finish'}}" icon="round" title="{{record.info.item_type==null ? '已垫' : record.info.item_type + ' | '}}{{record.info.name}} | {{record.flagNum}} 抽">
+                                        <view style="margin-top: 32rpx;" slot="content">
+                                            <t-progress theme="plump" label="{{false}}" percentage="{{(record.flagNum/90)*100}}" />
+                                        </view>
+                                    </t-step-item>
+                                </block>
+                            </t-steps>
+                        </view>
                     </view>
                 </t-tab-panel>
             </t-tabs>
         </view>
-    </scroll-view>
+    <!-- </scroll-view> -->
     <t-divider />
 </view>
 

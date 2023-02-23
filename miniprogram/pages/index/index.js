@@ -18,7 +18,7 @@ Component({
         snapButtonFlag: true,
         contentUrl: '',
         ssrList: [0],
-        tabPanelstyle: 'display:flex; justify-content:center; align-items:center; min-height:120px;',
+        tabPanelstyle: '/* display:flex; *//*justify-content:center*//*align-items:center*/min-height:120px;margin:32rpx;',
         copyright: 'Saving © 2023-2033 TD.All Rights Reserved.',
         rolePoolList: [],
         weaponPoolList: [],
@@ -400,6 +400,7 @@ Component({
             console.log(event.currentTarget.dataset.uid)
             var that = this
             that.setData({
+                uid: 'UID: ' + event.currentTarget.dataset.uid,
                 dynamicMessages: '获取数据中..'
             })
             Toast({
