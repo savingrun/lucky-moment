@@ -151,7 +151,3 @@
 <view class="t-footer">
     <t-footer theme="text" copyright="{{copyright}}"></t-footer>
 </view>
-
-<view class="container">
-  <f2 onRender="{{onRenderChart}}" />
-</view>
