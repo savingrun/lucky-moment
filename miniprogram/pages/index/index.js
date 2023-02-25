@@ -458,6 +458,7 @@ Component({
             that.setData({
                 rolePoolDataFlag: true,
                 snapButtonFlag: true,
+                uploadCloudFlag: false,
                 rolePoolList: [],
                 weaponPoolList: [],
                 permanentPoolList: [],

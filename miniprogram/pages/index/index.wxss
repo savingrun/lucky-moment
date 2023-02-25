@@ -33,3 +33,17 @@
     margin-top: 32rpx;
     margin-bottom: 32rpx;
 }
+
+.t-cell::after {
+    border: none !important;
+}
+
+.weui-media-box {
+    padding: 12rpx 24rpx 12rpx 24rpx !important;
+    position: relative !important;
+}
+
+.container {
+    width: 100%;
+    height: 600rpx;
+}

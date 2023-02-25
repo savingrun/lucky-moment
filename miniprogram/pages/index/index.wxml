@@ -14,15 +14,15 @@
     <t-cell-group theme="card">
         <view>
             <!-- <t-icon name="cloud" size="24" data-name="cloud" /> -->
-            <text style="font-size: 36rpx; font-weight: 800; line-height: 64rpx; color: rgba(0, 0, 0, 0.9)">云端数据</text>
+            <text style="font-size: 36rpx; font-weight: 800; line-height: 64rpx; color: rgba(44, 23, 23, 0.9)">云端数据</text>
         </view>
         <view class="section_content">
             <t-skeleton theme="paragraph" animation="gradient" loading="{{skeletonLoading}}"></t-skeleton>
         </view>
         <block wx:for="{{requestRecordList}}" wx:key="keyId" wx:for-index="index" wx:for-item="requestRecord">
-            <t-cell bind:click="getHistoryRecord" data-uid="{{requestRecord.uid}}" leftIcon="cloud-download" hover custom-style="border-radius: 18rpx; margin: 18rpx 0 18rpx 0;">
-                <text slot="title" style="font-size: 28rpx; font-weight: 700;">{{requestRecord.uid}}</text>
-                <text slot="note" style="font-size: 28rpx; font-weight: 700;">{{requestRecord.create_time}}</text>
+            <t-cell bind:click="getHistoryRecord" data-uid="{{requestRecord.uid}}" leftIcon="cloud-download" hover t-cell:after="border: none;" custom-style="border-radius: 18rpx; margin: 18rpx 0 18rpx 0;">
+                <text slot="title" style="font-size: 28rpx; font-weight: 500;">{{requestRecord.uid}}</text>
+                <text slot="note" style="font-size: 28rpx; font-weight: 500;">{{requestRecord.create_time}}</text>
             </t-cell>
         </block>
     </t-cell-group>
@@ -33,58 +33,110 @@
 <view wx:else>
     <t-divider content="{{ uid ? uid : '数据展示' }}" />
     <!-- <scroll-view scroll-y="true" style="max-height: {{scrollViewHeight}}rpx;" enable-back-to-top="true" scroll-anchoring="true" enable-passive="true" enhanced="true" fast-deceleration="true"> -->
-        <view class="textarea">
-            <t-tabs defaultValue="{{0}}" bind:change="onTabsChange" bind:click="onTabsClick" t-class="custom-tabs" theme="card" custom-style="border-radius: 18rpx;">
-                <t-tab-panel label="角色池" value="0" style="{{tabPanelstyle}}">
-                    <view wx:if="{{rolePoolDataFlag}}">暂无数据</view>
-                    <view wx:else>
-                        <view>
-                            <t-steps layout="vertical" readonly theme="default">
-                                <block wx:for="{{analyseRolePoolList}}" wx:key="keyId" wx:for-index="index" wx:for-item="record">
-                                    <t-step-item status="{{record.info.item_type==null ? 'default' : 'finish'}}" icon="round" title="{{record.info.item_type==null ? '已垫' : record.info.item_type + ' | '}}{{record.info.name}} | {{record.flagNum}} 抽">
-                                        <view style="margin-top: 32rpx;" slot="content">
-                                            <t-progress theme="plump" label="{{false}}" percentage="{{(record.flagNum/90)*100}}" />
-                                        </view>
-                                    </t-step-item>
-                                </block>
-                            </t-steps>
-                        </view>
-                    </view>
-                </t-tab-panel>
-                <t-tab-panel label="武器池" value="1" style="{{tabPanelstyle}}">
-                    <view wx:if="{{weaponPoolDataFlag}}">暂无数据</view>
-                    <view wx:else>
-                        <view>
-                            <t-steps separator="arrow" layout="vertical" readonly theme="default">
-                                <block wx:for="{{analyseWeaponPoolList}}" wx:key="keyId" wx:for-index="index" wx:for-item="record">
-                                    <t-step-item status="{{record.info.item_type==null ? 'default' : 'finish'}}" icon="round" title="{{record.info.item_type==null ? '已垫' : record.info.item_type + ' | '}}{{record.info.name}} | {{record.flagNum}} 抽">
-                                        <view style="margin-top: 32rpx;" slot="content">
-                                            <t-progress theme="plump" label="{{false}}" percentage="{{(record.flagNum/90)*100}}" />
-                                        </view>
-                                    </t-step-item>
-                                </block>
-                            </t-steps>
-                        </view>
-                    </view>
-                </t-tab-panel>
-                <t-tab-panel label="常驻池" value="2" style="{{tabPanelstyle}}">
-                    <view wx:if="{{permanentPoolDataFlag}}">暂无数据</view>
-                    <view wx:else>
-                        <view>
-                            <t-steps layout="vertical" readonly theme="default">
-                                <block wx:for="{{analysePermanentPoolList}}" wx:key="keyId" wx:for-index="index" wx:for-item="record">
-                                    <t-step-item status="{{record.info.item_type==null ? 'default' : 'finish'}}" icon="round" title="{{record.info.item_type==null ? '已垫' : record.info.item_type + ' | '}}{{record.info.name}} | {{record.flagNum}} 抽">
-                                        <view style="margin-top: 32rpx;" slot="content">
-                                            <t-progress theme="plump" label="{{false}}" percentage="{{(record.flagNum/90)*100}}" />
-                                        </view>
-                                    </t-step-item>
-                                </block>
-                            </t-steps>
-                        </view>
-                    </view>
-                </t-tab-panel>
-            </t-tabs>
-        </view>
+    <view class="textarea">
+        <t-tabs defaultValue="{{0}}" bind:change="onTabsChange" bind:click="onTabsClick" t-class="custom-tabs" theme="card" custom-style="border-radius: 18rpx;">
+            <t-tab-panel label="角色池" value="0" style="{{tabPanelstyle}}">
+                <view wx:if="{{rolePoolDataFlag}}">暂无数据</view>
+                <view wx:else>
+                    <t-steps layout="vertical" readonly theme="default">
+                        <block wx:for="{{analyseRolePoolList}}" wx:key="keyId" wx:for-index="index" wx:for-item="record">
+                            <view class="page__bd">
+                                <view class="weui-panel_access">
+                                    <view class="weui-panel__bd">
+                                        <navigator url="" class="weui-media-box weui-media-box_appmsg" hover-class="weui-cell_active">
+                                            <view class="weui-media-box__hd weui-media-box__hd_in-appmsg">
+                                                <!-- <image style="border-radius: 16rpx;" class="weui-media-box__thumb" src="{{record.info.item_type==null ? 'cloud://zerozeroone-dev-7g7o3y2ud134dc22.7a65-zerozeroone-dev-7g7o3y2ud134dc22-1316660727/default.png' : 'cloud://zerozeroone-dev-7g7o3y2ud134dc22.7a65-zerozeroone-dev-7g7o3y2ud134dc22-1316660727/' + (record.info.item_type=='角色' ? 'role' : 'weapon') + '/' + record.info.name + '.png'}}" /> -->
+                                                <t-avatar size="100rpx" shape="round" image="{{record.info.item_type==null ? 'cloud://zerozeroone-dev-7g7o3y2ud134dc22.7a65-zerozeroone-dev-7g7o3y2ud134dc22-1316660727/default.png' : 'cloud://zerozeroone-dev-7g7o3y2ud134dc22.7a65-zerozeroone-dev-7g7o3y2ud134dc22-1316660727/' + (record.info.item_type=='角色' ? 'role' : 'weapon') + '/' + record.info.name + '.png'}}" />
+                                            </view>
+                                            <view class="weui-media-box__bd weui-media-box__bd_in-appmsg">
+                                                <view class="weui-media-box__title">
+                                                    {{record.info.name==null ? '已垫' : record.info.name}}
+                                                </view>
+                                                <view style="padding-top: 24rpx;" class="weui-media-box__desc">
+                                                    <!-- 由各种物质组成的巨型球状天体，叫做星球。星球有一定的形状，有自己的运行轨道。 -->
+                                                    <t-progress color="#ffc107" track-color="#fbf3dd" label="{{false}}" percentage="{{(record.flagNum/90)*100}}">
+                                                        <view slot="label" style="color:black; width:16%; padding-left:18rpx; text-align: right;">
+                                                            {{record.flagNum}} 抽
+                                                        </view>
+                                                    </t-progress>
+                                                </view>
+                                            </view>
+                                        </navigator>
+                                    </view>
+                                </view>
+                            </view>
+                        </block>
+                    </t-steps>
+                </view>
+            </t-tab-panel>
+            <t-tab-panel label="武器池" value="1" style="{{tabPanelstyle}}">
+                <view wx:if="{{weaponPoolDataFlag}}">暂无数据</view>
+                <view wx:else>
+                    <t-steps layout="vertical" readonly theme="default">
+                        <block wx:for="{{analyseWeaponPoolList}}" wx:key="keyId" wx:for-index="index" wx:for-item="record">
+                            <view class="page__bd">
+                                <view class="weui-panel_access">
+                                    <view class="weui-panel__bd">
+                                        <navigator url="" class="weui-media-box weui-media-box_appmsg" hover-class="weui-cell_active">
+                                            <view class="weui-media-box__hd weui-media-box__hd_in-appmsg">
+                                                <!-- <image style="border-radius: 16rpx;" class="weui-media-box__thumb" src="{{record.info.item_type==null ? 'cloud://zerozeroone-dev-7g7o3y2ud134dc22.7a65-zerozeroone-dev-7g7o3y2ud134dc22-1316660727/default.png' : 'cloud://zerozeroone-dev-7g7o3y2ud134dc22.7a65-zerozeroone-dev-7g7o3y2ud134dc22-1316660727/' + (record.info.item_type=='角色' ? 'role' : 'weapon') + '/' + record.info.name + '.png'}}" /> -->
+                                                <t-avatar size="100rpx" shape="round" image="{{record.info.item_type==null ? 'cloud://zerozeroone-dev-7g7o3y2ud134dc22.7a65-zerozeroone-dev-7g7o3y2ud134dc22-1316660727/default.png' : 'cloud://zerozeroone-dev-7g7o3y2ud134dc22.7a65-zerozeroone-dev-7g7o3y2ud134dc22-1316660727/' + (record.info.item_type=='角色' ? 'role' : 'weapon') + '/' + record.info.name + '.png'}}" />
+                                            </view>
+                                            <view class="weui-media-box__bd weui-media-box__bd_in-appmsg">
+                                                <view class="weui-media-box__title">
+                                                    {{record.info.name==null ? '已垫' : record.info.name}}
+                                                </view>
+                                                <view style="padding-top: 24rpx;" class="weui-media-box__desc">
+                                                    <t-progress color="#ffc107" track-color="#fbf3dd" label="{{false}}" percentage="{{(record.flagNum/90)*100}}">
+                                                        <view slot="label" style="color:black; width:16%; padding-left:18rpx; text-align: right;">
+                                                            {{record.flagNum}} 抽
+                                                        </view>
+                                                    </t-progress>
+                                                </view>
+                                            </view>
+                                        </navigator>
+                                    </view>
+                                </view>
+                            </view>
+                        </block>
+                    </t-steps>
+                </view>
+            </t-tab-panel>
+            <t-tab-panel label="常驻池" value="2" style="{{tabPanelstyle}}">
+                <view wx:if="{{permanentPoolDataFlag}}">暂无数据</view>
+                <view wx:else>
+                    <t-steps layout="vertical" readonly theme="default">
+                        <block wx:for="{{analysePermanentPoolList}}" wx:key="keyId" wx:for-index="index" wx:for-item="record">
+                            <view class="page__bd">
+                                <view class="weui-panel_access">
+                                    <view class="weui-panel__bd">
+                                        <navigator url="" class="weui-media-box weui-media-box_appmsg" hover-class="weui-cell_active">
+                                            <view class="weui-media-box__hd weui-media-box__hd_in-appmsg">
+                                                <!-- <image style="border-radius: 16rpx;" class="weui-media-box__thumb" src="{{record.info.item_type==null ? 'cloud://zerozeroone-dev-7g7o3y2ud134dc22.7a65-zerozeroone-dev-7g7o3y2ud134dc22-1316660727/default.png' : 'cloud://zerozeroone-dev-7g7o3y2ud134dc22.7a65-zerozeroone-dev-7g7o3y2ud134dc22-1316660727/' + (record.info.item_type=='角色' ? 'role' : 'weapon') + '/' + record.info.name + '.png'}}" /> -->
+                                                <t-avatar size="100rpx" shape="round" image="{{record.info.item_type==null ? 'cloud://zerozeroone-dev-7g7o3y2ud134dc22.7a65-zerozeroone-dev-7g7o3y2ud134dc22-1316660727/default.png' : 'cloud://zerozeroone-dev-7g7o3y2ud134dc22.7a65-zerozeroone-dev-7g7o3y2ud134dc22-1316660727/' + (record.info.item_type=='角色' ? 'role' : 'weapon') + '/' + record.info.name + '.png'}}" />
+                                            </view>
+                                            <view class="weui-media-box__bd weui-media-box__bd_in-appmsg">
+                                                <view class="weui-media-box__title">
+                                                    {{record.info.name==null ? '已垫' : record.info.name}}
+                                                </view>
+                                                <view style="padding-top: 24rpx;" class="weui-media-box__desc">
+                                                    <t-progress color="#ffc107" track-color="#fbf3dd" label="{{false}}" percentage="{{(record.flagNum/90)*100}}">
+                                                        <view slot="label" style="color:black; width:16%; padding-left:18rpx; text-align: right;">
+                                                            {{record.flagNum}} 抽
+                                                        </view>
+                                                    </t-progress>
+                                                </view>
+                                            </view>
+                                        </navigator>
+                                    </view>
+                                </view>
+                            </view>
+                        </block>
+                    </t-steps>
+                </view>
+            </t-tab-panel>
+        </t-tabs>
+    </view>
     <!-- </scroll-view> -->
     <t-divider />
 </view>
@@ -98,4 +150,8 @@
 
 <view class="t-footer">
     <t-footer theme="text" copyright="{{copyright}}"></t-footer>
+</view>
+
+<view class="container">
+  <f2 onRender="{{onRenderChart}}" />
 </view>
