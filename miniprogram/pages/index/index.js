@@ -16,24 +16,40 @@ import {
 } from "@antv/f2/jsx-runtime";
 import Chart from './chart';
 const data = [{
-        genre: 'Sports',
-        sold: 275
+        time: '2016-08-08 00:00:00',
+        tem: 10,
     },
     {
-        genre: 'Strategy',
-        sold: 115
+        time: '2016-08-08 00:10:00',
+        tem: 22,
     },
     {
-        genre: 'Action',
-        sold: 120
+        time: '2016-08-08 00:30:00',
+        tem: 20,
     },
     {
-        genre: 'Shooter',
-        sold: 350
+        time: '2016-08-09 00:35:00',
+        tem: 26,
     },
     {
-        genre: 'Other',
-        sold: 150
+        time: '2016-08-09 01:00:00',
+        tem: 20,
+    },
+    {
+        time: '2016-08-09 01:20:00',
+        tem: 26,
+    },
+    {
+        time: '2016-08-10 01:40:00',
+        tem: 28,
+    },
+    {
+        time: '2016-08-10 02:00:00',
+        tem: 20,
+    },
+    {
+        time: '2016-08-10 02:20:00',
+        tem: 18,
     },
 ];
 
