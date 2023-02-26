@@ -1,5 +1,15 @@
 {
-  "dependencies": {
-    "tdesign-miniprogram": "^1.0.0-rc.2"
-  }
+    "scripts": {
+        "beforeCompile": "babel miniprogram/pages --out-dir miniprogram/pages --only **/*.jsx"
+    },
+    "dependencies": {
+        "@antv/f2": "^4.0.41",
+        "@antv/f2-wx": "^4.0.41",
+        "tdesign-miniprogram": "^1.0.0-rc.2"
+    },
+    "devDependencies": {
+        "@babel/cli": "^7.21.0",
+        "@babel/core": "^7.21.0",
+        "@babel/plugin-transform-react-jsx": "^7.21.0"
+    }
 }

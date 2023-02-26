@@ -8,6 +8,41 @@ import Toast, {
 } from 'tdesign-miniprogram/toast/index';
 import Message from 'tdesign-miniprogram/message/index';
 
+import {
+    createElement
+} from '@antv/f2';
+import {
+    jsx as _jsx
+} from "@antv/f2/jsx-runtime";
+import Chart from './chart';
+const data = [{
+        genre: 'Sports',
+        sold: 275
+    },
+    {
+        genre: 'Strategy',
+        sold: 115
+    },
+    {
+        genre: 'Action',
+        sold: 120
+    },
+    {
+        genre: 'Shooter',
+        sold: 350
+    },
+    {
+        genre: 'Other',
+        sold: 150
+    },
+];
+
+Page({
+    data: {
+        onRenderChart: () => {}
+    },
+});
+
 Component({
     data: {
         scrollViewHeight: 0,
@@ -28,7 +63,8 @@ Component({
         skeletonLoading: true,
         analyseRolePoolList: [],
         analyseWeaponPoolList: [],
-        analysePermanentPoolList: []
+        analysePermanentPoolList: [],
+        onRenderChart: () => {}
     },
     methods: {
         onLoad(options) {
@@ -54,6 +90,24 @@ Component({
                 envId: options.envId,
                 scrollViewHeight: wx.getSystemInfoSync().windowHeight
             })
+        },
+
+
+        onReady() {
+            this.setData({
+                onRenderChart: () => {
+                    return this.renderChart(data);
+                }
+            });
+        },
+        renderChart(data) {
+            // return _jsx(Chart, {
+            //   data: data
+            // });
+            // 如果不使用 jsx, 用下面代码效果也是一样的
+            return createElement(Chart, {
+                data: data,
+            });
         },
 
         onShareAppMessage() {

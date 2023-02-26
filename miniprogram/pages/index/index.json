@@ -21,6 +21,7 @@
         "t-steps": "tdesign-miniprogram/steps/steps",
         "t-step-item": "tdesign-miniprogram/step-item/step-item",
         "t-avatar": "tdesign-miniprogram/avatar/avatar",
-        "t-avatar-group": "tdesign-miniprogram/avatar-group/avatar-group"
+        "t-avatar-group": "tdesign-miniprogram/avatar-group/avatar-group",
+        "f2": "@antv/f2-wx"
     }
 }
