@@ -44,7 +44,7 @@
         "useCompilerPlugins": false,
         "minifyWXML": true,
         "ignoreDevUnusedFiles": false,
-        "ignoreUploadUnusedFiles": false
+        "ignoreUploadUnusedFiles": true
     },
     "appid": "wxe0face0d131e0bd2",
     "projectname": "zerozeroone",
