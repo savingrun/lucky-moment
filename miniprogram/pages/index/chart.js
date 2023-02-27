@@ -4,7 +4,7 @@ import { jsxs as _jsxs } from "@antv/f2/jsx-runtime";
 const scale = {
   time: {
     type: 'timeCat',
-    mask: 'MM/DD',
+    mask: 'YYYY/MM/DD HH:mm:ss',
     tickCount: 3,
     range: [0, 1]
   },
@@ -24,7 +24,7 @@ export default (props => {
     children: [_jsx(Axis, {
       field: "time"
     }), _jsx(Axis, {
-      field: "tem",
+      field: "flagNum",
       style: {
         label: {
           align: 'between'
@@ -32,10 +32,10 @@ export default (props => {
       }
     }), _jsx(Area, {
       x: "time",
-      y: "tem"
+      y: "flagNum"
     }), _jsx(Line, {
       x: "time",
-      y: "tem",
+      y: "flagNum",
       shape: "smooth"
     }), _jsx(Tooltip, {})]
   });

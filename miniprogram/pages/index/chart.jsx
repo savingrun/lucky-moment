@@ -3,15 +3,10 @@ import { Chart, Axis, Tooltip, Line, Area } from '@antv/f2';
 const scale = {
     time: {
         type: 'timeCat',
-        mask: 'MM/DD',
+        mask: 'YYYY/MM/DD HH:mm:ss',
         tickCount: 3,
         range: [0, 1],
-    },
-    tem: {
-        tickCount: 5,
-        min: 0,
-        alias: '日均温度',
-    },
+    }
 };
 
 export default (props) => {
@@ -19,12 +14,12 @@ export default (props) => {
     return (
         <Chart data={data} scale={scale}>
             <Axis field="time" />
-            <Axis field="tem"
+            <Axis field="flagNum"
                 style={{
                     label: { align: 'between' },
                 }} />
-            <Area x="time" y="tem" />
-            <Line x="time" y="tem" shape="smooth" />
+            <Area x="time" y="flagNum" />
+            <Line x="time" y="flagNum" shape="smooth" />
             <Tooltip />
         </Chart>
     );

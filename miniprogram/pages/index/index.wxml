@@ -57,7 +57,7 @@
                                                 <view style="padding-top: 24rpx;" class="weui-media-box__desc">
                                                     <!-- 由各种物质组成的巨型球状天体，叫做星球。星球有一定的形状，有自己的运行轨道。 -->
                                                     <t-progress color="#ffc107" track-color="#fbf3dd" label="{{false}}" percentage="{{(record.flagNum/90)*100}}">
-                                                        <view slot="label" style="color:black; width:16%; padding-left:18rpx; text-align: right;">
+                                                        <view slot="label" style="color:black; width:18%; padding-left:18rpx; text-align: right;">
                                                             {{record.flagNum}} 抽
                                                         </view>
                                                     </t-progress>
@@ -90,7 +90,7 @@
                                                 </view>
                                                 <view style="padding-top: 24rpx;" class="weui-media-box__desc">
                                                     <t-progress color="#ffc107" track-color="#fbf3dd" label="{{false}}" percentage="{{(record.flagNum/90)*100}}">
-                                                        <view slot="label" style="color:black; width:16%; padding-left:18rpx; text-align: right;">
+                                                        <view slot="label" style="color:black; width:18%; padding-left:18rpx; text-align: right;">
                                                             {{record.flagNum}} 抽
                                                         </view>
                                                     </t-progress>
@@ -123,7 +123,7 @@
                                                 </view>
                                                 <view style="padding-top: 24rpx;" class="weui-media-box__desc">
                                                     <t-progress color="#ffc107" track-color="#fbf3dd" label="{{false}}" percentage="{{(record.flagNum/90)*100}}">
-                                                        <view slot="label" style="color:black; width:16%; padding-left:18rpx; text-align: right;">
+                                                        <view slot="label" style="color:black; width:18%; padding-left:18rpx; text-align: right;">
                                                             {{record.flagNum}} 抽
                                                         </view>
                                                     </t-progress>

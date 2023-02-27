@@ -43,6 +43,24 @@ exports.main = async (event, context) => {
             rank_type: _.in(rankTypeList),
             gacha_type: _.in(gachaTypeList)
         })
+        .project({
+            _id: 0,
+            id: '$id',
+            uid: '$uid',
+            gacha_type: '$gacha_type',
+            item_id: '$item_id',
+            count: '$count',
+            time: $.dateToString({
+                date: '$time',
+                format: '%Y/%m/%d %H:%M:%S',
+                onNull: 'null',
+                timezone: 'Asia/Shanghai'
+            }),
+            name: '$name',
+            lang: '$lang',
+            item_type: '$item_type',
+            rank_type: '$rank_type'
+        })
         .sort({
             time: -1
         })

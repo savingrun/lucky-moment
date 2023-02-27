@@ -3,18 +3,19 @@ const app = getApp()
 const {
     envList
 } = require('../../envList.js')
+let dateUtil = require('../../util/dateUtil.js')
 import Toast, {
     hideToast
-} from 'tdesign-miniprogram/toast/index';
-import Message from 'tdesign-miniprogram/message/index';
+} from 'tdesign-miniprogram/toast/index'
+import Message from 'tdesign-miniprogram/message/index'
 
 import {
     createElement
-} from '@antv/f2';
+} from '@antv/f2'
 import {
     jsx as _jsx
-} from "@antv/f2/jsx-runtime";
-import Chart from './chart';
+} from "@antv/f2/jsx-runtime"
+import Chart from './chart'
 const data = [{
         time: '2016-08-08 00:00:00',
         tem: 10,
@@ -80,7 +81,8 @@ Component({
         analyseRolePoolList: [],
         analyseWeaponPoolList: [],
         analysePermanentPoolList: [],
-        onRenderChart: () => {}
+        onRenderChart: () => {},
+        chartList: []
     },
     methods: {
         onLoad(options) {
@@ -372,6 +374,7 @@ Component({
             console.log(list)
             var flagNum = 0
             var analyseList = []
+            var chartList = []
             for (let index = list.length - 1; index >= 0; index--) {
                 const element = list[index];
                 console.log(element)
@@ -384,12 +387,22 @@ Component({
                         info: element,
                         flagNum: flagNum
                     })
+                    chartList.unshift({
+                        time: element.time,
+                        name: element.name,
+                        flagNum: flagNum
+                    })
                     flagNum = 0
                     console.log("***********")
                 }
                 if (index == 0) {
                     analyseList.unshift({
                         info: null,
+                        flagNum: flagNum
+                    })
+                    chartList.unshift({
+                        time: dateUtil.customFormatTime(new Date(), 'Y/M/D h:m:s'),
+                        name: '已垫',
                         flagNum: flagNum
                     })
                     console.log("flagNum:" + flagNum)
@@ -401,7 +414,11 @@ Component({
                 case "role":
                     that.setData({
                         analyseRolePoolList: analyseList,
-                        rolePoolDataFlag: false
+                        rolePoolDataFlag: false,
+                        chartList: chartList,
+                        onRenderChart: () => {
+                            return this.renderChart(chartList);
+                        }
                     })
                     break
                 case "weapon":

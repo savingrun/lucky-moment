@@ -43,7 +43,8 @@
         "showES6CompileOption": false,
         "useCompilerPlugins": false,
         "minifyWXML": true,
-        "ignoreUploadUnusedFiles": true
+        "ignoreDevUnusedFiles": false,
+        "ignoreUploadUnusedFiles": false
     },
     "appid": "wxe0face0d131e0bd2",
     "projectname": "zerozeroone",
