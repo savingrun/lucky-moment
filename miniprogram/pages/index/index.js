@@ -375,6 +375,7 @@ Component({
             var flagNum = 0
             var analyseList = []
             var chartList = []
+            chartList = chartList.concat(that.data.chartList)
             for (let index = list.length - 1; index >= 0; index--) {
                 const element = list[index];
                 console.log(element)
@@ -390,7 +391,8 @@ Component({
                     chartList.unshift({
                         time: element.time,
                         name: element.name,
-                        flagNum: flagNum
+                        flagNum: flagNum,
+                        type: type
                     })
                     flagNum = 0
                     console.log("***********")
@@ -403,7 +405,8 @@ Component({
                     chartList.unshift({
                         time: dateUtil.customFormatTime(new Date(), 'Y/M/D h:m:s'),
                         name: '已垫',
-                        flagNum: flagNum
+                        flagNum: flagNum,
+                        type: type
                     })
                     console.log("flagNum:" + flagNum)
                 }
@@ -424,13 +427,21 @@ Component({
                 case "weapon":
                     that.setData({
                         analyseWeaponPoolList: analyseList,
-                        weaponPoolDataFlag: false
+                        weaponPoolDataFlag: false,
+                        chartList: chartList,
+                        onRenderChart: () => {
+                            return this.renderChart(chartList);
+                        }
                     })
                     break
                 default:
                     that.setData({
                         analysePermanentPoolList: analyseList,
-                        permanentPoolDataFlag: false
+                        permanentPoolDataFlag: false,
+                        chartList: chartList,
+                        onRenderChart: () => {
+                            return this.renderChart(chartList);
+                        }
                     })
             }
         },
@@ -551,7 +562,8 @@ Component({
                 permanentPoolList: [],
                 analyseRolePoolList: [],
                 analyseWeaponPoolList: [],
-                analysePermanentPoolList: []
+                analysePermanentPoolList: [],
+                chartList: []
             })
         }
     },

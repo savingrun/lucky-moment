@@ -1,4 +1,4 @@
-import { Chart, Axis, Tooltip, Line, Area } from '@antv/f2';
+import { Chart, Axis, Tooltip, Line, Area, Legend, Point, ScrollBar } from '@antv/f2';
 
 const scale = {
     time: {
@@ -18,9 +18,11 @@ export default (props) => {
                 style={{
                     label: { align: 'between' },
                 }} />
-            <Area x="time" y="flagNum" />
-            <Line x="time" y="flagNum" shape="smooth" />
-            <Tooltip />
+            <Area x="time" y="flagNum" color="type" shape="smooth" />
+            <Line x="time" y="flagNum" color="type" shape="smooth" />
+            {/* <Point x="time" y="flagNum" /> */}
+            {/* <Legend position="top" /> */}
+            <Tooltip showCrosshairs="true" crosshairsType="xy" />
         </Chart>
     );
 };
