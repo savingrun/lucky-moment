@@ -10,7 +10,9 @@
     <t-fab icon="cloud-upload" bind:click="uploadCloud" aria-label="增加" custom-style="z-index: 100; position: absolute; right: 32rpx; bottom: 64rpx;"></t-fab>
 </view>
 
-<f2 class="container" onRender="{{onRenderChart}}" />
+<view style="padding: 32rpx;">
+    <f2 class="container" onRender="{{onRenderChart}}" />
+</view>
 
 <view wx:if="{{rolePoolDataFlag}}">
     <t-cell-group theme="card">

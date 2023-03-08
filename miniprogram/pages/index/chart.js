@@ -4,9 +4,13 @@ import { jsxs as _jsxs } from "@antv/f2/jsx-runtime";
 const scale = {
   time: {
     type: 'timeCat',
-    mask: 'YYYY/MM/DD HH:mm:ss',
+    mask: 'HH:mm:ss',
     tickCount: 3,
     range: [0, 1]
+  },
+  flagNum: {
+    formatter: flagNum => `${flagNum} 抽`,
+    tickCount: 5
   }
 };
 export default (props => {
@@ -16,28 +20,36 @@ export default (props => {
   return _jsxs(Chart, {
     data: data,
     scale: scale,
-    children: [_jsx(Axis, {
-      field: "time"
-    }), _jsx(Axis, {
-      field: "flagNum",
+    children: [_jsx(Legend, {
+      position: "top",
       style: {
-        label: {
-          align: 'between'
+        justifyContent: 'space-around'
+      },
+      triggerMap: {
+        press: (items, records, legend) => {
+          const map = {};
+          items.forEach(item => map[item.name] = _.clone(item));
+          records.forEach(record => {
+            map[record.type].value = record.value;
+          });
+          legend.setItems(_.values(map));
+        },
+        pressend: (items, records, legend) => {
+          legend.setItems(items);
         }
       }
-    }), _jsx(Area, {
-      x: "time",
-      y: "flagNum",
-      color: "type",
-      shape: "smooth"
-    }), _jsx(Line, {
-      x: "time",
-      y: "flagNum",
-      color: "type",
-      shape: "smooth"
+    }), _jsx(Axis, {
+      field: "time"
+    }), _jsx(Axis, {
+      field: "flagNum"
+    }), _jsx(Point, {
+      x: "flagNum",
+      y: "time",
+      color: "type"
     }), _jsx(Tooltip, {
       showCrosshairs: "true",
-      crosshairsType: "xy"
+      crosshairsType: "xy",
+      showTooltipMarker: true
     })]
   });
 });

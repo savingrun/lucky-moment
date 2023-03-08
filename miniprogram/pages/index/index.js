@@ -17,41 +17,89 @@ import {
 } from "@antv/f2/jsx-runtime"
 import Chart from './chart'
 const data = [{
-        time: '2016-08-08 00:00:00',
-        tem: 10,
+        flagNum: 3,
+        name: "已垫",
+        time: "2023/03/09 00:23:41",
+        type: "role"
     },
     {
-        time: '2016-08-08 00:10:00',
-        tem: 22,
+        flagNum: 77,
+        name: "夜兰",
+        time: "2023/02/07 18:05:55",
+        type: "role"
     },
     {
-        time: '2016-08-08 00:30:00',
-        tem: 20,
+        flagNum: 77,
+        name: "雷电将军",
+        time: "2023/01/05 19:41:33",
+        type: "role"
     },
     {
-        time: '2016-08-09 00:35:00',
-        tem: 26,
+        flagNum: 85,
+        name: "神里绫人",
+        time: "2022/12/27 19:16:35",
+        type: "role"
     },
     {
-        time: '2016-08-09 01:00:00',
-        tem: 20,
+        flagNum: 69,
+        name: "达达利亚",
+        time: "2022/11/18 18:09:13",
+        type: "role"
     },
     {
-        time: '2016-08-09 01:20:00',
-        tem: 26,
+        flagNum: 78,
+        name: "纳西妲",
+        time: "2022/11/02 10:55:18",
+        type: "role"
     },
     {
-        time: '2016-08-10 01:40:00',
-        tem: 28,
+        flagNum: 71,
+        name: "温迪",
+        time: "2022/09/28 12:52:32",
+        type: "role"
     },
     {
-        time: '2016-08-10 02:00:00',
-        tem: 20,
+        flagNum: 45,
+        name: "莫娜",
+        time: "2022/09/28 12:51:20",
+        type: "role"
     },
     {
-        time: '2016-08-10 02:20:00',
-        tem: 18,
+        flagNum: 5,
+        name: "已垫",
+        time: "2023/03/09 00:23:40",
+        type: "weapon"
     },
+    {
+        flagNum: 70,
+        name: "天空之刃",
+        time: "2023/02/17 06:35:27",
+        type: "weapon"
+    },
+    {
+        flagNum: 45,
+        name: "波乱月白经津",
+        time: "2022/12/27 19:15:26",
+        type: "weapon"
+    },
+    {
+        flagNum: 77,
+        name: "已垫",
+        time: "2023/03/09 00:23:40",
+        type: "permanent"
+    },
+    {
+        flagNum: 18,
+        name: "天空之卷",
+        time: "2022/11/01 10:31:26",
+        type: "permanent"
+    },
+    {
+        flagNum: 14,
+        name: "阿莫斯之弓",
+        time: "2022/09/28 12:49:55",
+        type: "permanent"
+    }
 ];
 
 Page({
@@ -109,8 +157,6 @@ Component({
                 scrollViewHeight: wx.getSystemInfoSync().windowHeight
             })
         },
-
-
         onReady() {
             this.setData({
                 onRenderChart: () => {
@@ -389,6 +435,7 @@ Component({
                         flagNum: flagNum
                     })
                     chartList.unshift({
+                        // time: dateUtil.customFormatTime(element.time, 'h:m:s'),
                         time: element.time,
                         name: element.name,
                         flagNum: flagNum,
@@ -403,6 +450,7 @@ Component({
                         flagNum: flagNum
                     })
                     chartList.unshift({
+                        // time: dateUtil.customFormatTime(new Date(), 'h:m:s'),
                         time: dateUtil.customFormatTime(new Date(), 'Y/M/D h:m:s'),
                         name: '已垫',
                         flagNum: flagNum,
