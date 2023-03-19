@@ -130,11 +130,13 @@ Component({
         analyseWeaponPoolList: [],
         analysePermanentPoolList: [],
         onRenderChart: () => {},
-        chartList: []
+        chartList: [],
+        analyseChartList: []
     },
     methods: {
         onLoad(options) {
             var that = this
+            that.getAnalyseData()
             wx.cloud.callFunction({
                 name: 'getRequestRecord',
                 config: {
@@ -613,6 +615,29 @@ Component({
                 analysePermanentPoolList: [],
                 chartList: []
             })
-        }
+        },
+
+        getAnalyseData() {
+            var that = this
+            wx.cloud.callFunction({
+                name: 'getAnalyseData',
+                config: {
+                    env: this.data.envId
+                },
+                data: {
+                },
+                success(res) {
+                    console.log('getAnalyseData:' + res)
+                    that.setData({
+                        analyseChartList: res.result,
+                        chartList: res.result
+                    })
+                },
+                fail(err) {
+                    console.log(err)
+                },
+                complete(res) {}
+            })
+        },
     },
 })

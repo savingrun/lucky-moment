@@ -10,8 +10,16 @@
     <t-fab icon="cloud-upload" bind:click="uploadCloud" aria-label="增加" custom-style="z-index: 100; position: absolute; right: 32rpx; bottom: 64rpx;"></t-fab>
 </view>
 
-<view style="padding: 32rpx;">
-    <f2 class="container" onRender="{{onRenderChart}}" />
+
+<view wx:if="{{!rolePoolDataFlag}}">
+    <t-cell-group theme="card">
+        <view>
+            <text style="font-size: 36rpx; font-weight: 800; line-height: 64rpx; color: rgba(44, 23, 23, 0.9)">{{rolePoolDataFlag ? '共享五星频谱图' : '五星频谱图'}}</text>
+        </view>
+        <view>
+            <f2 class="container" onRender="{{onRenderChart}}" />
+        </view>
+    </t-cell-group>
 </view>
 
 <view wx:if="{{rolePoolDataFlag}}">
